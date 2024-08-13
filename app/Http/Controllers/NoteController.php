@@ -13,7 +13,10 @@ class NoteController extends Controller
     public function index()
     {
         // dd(request()->user()->id);
-        $notes = Note::where('user_id', request()->user()->id )->orderBy('created_at', 'desc')->paginate();
+        $notes = Note::where('user_id', request()->user()->id )
+                // ->orderBy('created_at', 'desc')
+                ->latest()
+                ->paginate();
         // dd($notes['user_id']);
         return view('note.index', ['notes' => $notes]);
     }
@@ -34,6 +37,7 @@ class NoteController extends Controller
         $inputData = $request->validate([
             'notes' => ['required', 'string', 'min:10', 'max:2500'],
         ]);
+        // dd($request->user()->id);
         $inputData['user_id'] = $request->user()->id;
 
         $note = Note::create($inputData);
@@ -46,6 +50,9 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
+        if($note->user_id != request()->user()->id){
+            abort(404);
+        }
         return view('note.show', ['note'=>$note]);
     }
 

@@ -1,8 +1,32 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoteController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
+
+Route::get('/auth/github/redirect', function () {
+    return Socialite::driver('github')->redirect();
+});
+
+Route::get('/auth/github/callback', function () {
+    $socialUser = Socialite::driver('github')->user();
+
+    $user = User::firstOrCreate([
+        'email' => $socialUser->getEmail(),
+    ], [
+        'name' => $socialUser->getName(),
+        'password' => Hash::make(Str::random(24)), // You might not need a password in case of OAuth
+    ]);
+
+    Auth::login($user);
+
+    return redirect('/note');
+});
 
 Route::redirect('/', '/note')->name('dashboard');
 
