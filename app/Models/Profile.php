@@ -6,11 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Note extends Model
+class Profile extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['notes', 'user_id'];
 
     public function user()
     {

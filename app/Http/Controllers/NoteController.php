@@ -14,7 +14,7 @@ class NoteController extends Controller
     {
         // dd(request()->user()->id);
         $notes = Note::where('user_id', request()->user()->id )
-                // ->orderBy('created_at', 'desc')
+                ->with('user')
                 ->latest()
                 ->paginate();
         // dd($notes['user_id']);
