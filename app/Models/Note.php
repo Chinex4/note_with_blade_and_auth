@@ -10,7 +10,7 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['notes', 'user_id'];
+    protected $fillable = ['notes', 'user_id', 'image'];
 
     public function user()
     {

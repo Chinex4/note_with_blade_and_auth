@@ -5,7 +5,9 @@
             <div class="col-lg-6 mx-auto">
                     <p class="fw-bold">Created at: {{ $note->created_at->format('h:iA, d F, Y') }}</p>
                     <div class="card">
+                        <img src="{{asset('storage/' . $note->image)}}" alt="">
                         <div class="card-body">
+                            
                             <p>{{ $note->notes }}</p>
                         </div>
                     </div>

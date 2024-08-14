@@ -36,8 +36,17 @@ class NoteController extends Controller
     {
         $inputData = $request->validate([
             'notes' => ['required', 'string', 'min:10', 'max:2500'],
+            'image' => ['nullable', 'image', 'max:2048', 'mimes:png,jpg,gif'],
         ]);
         // dd($request->user()->id);
+
+        if ($request->hasFile('image')) {
+            # code...
+            $inputData['image'] = $request->file('image')->store('images', 'public');
+        } else{
+            $inputData['image'] = 'default-image.jpg';
+        }
+
         $inputData['user_id'] = $request->user()->id;
 
         $note = Note::create($inputData);
@@ -70,8 +79,16 @@ class NoteController extends Controller
     public function update(Request $request, Note $note)
     {
         $inputData = $request->validate([
-            'notes' => ['required', 'string'],
+            'notes' => ['required', 'string', 'min:10', 'max:2500'],
+            'image' => ['nullable', 'image', 'max:2048', 'mimes:png,jpg,gif'],
         ]);
+
+        if ($request->hasFile('image')) {
+            # code...
+            $inputData['image'] = $request->file('image')->store('images', 'public');
+        } else{
+            $inputData['image'] = 'default-image.jpg';
+        }
 
         $note->update($inputData);
 

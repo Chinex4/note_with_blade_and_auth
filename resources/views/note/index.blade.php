@@ -12,7 +12,7 @@
                                 <p>{{ Str::words($note->notes, 20) }}</p>
                             </div>
                         </div>
-                        <p>Creat{{$note->user->email}}</p>
+                        <p>Created by: {{$note->user->email}}</p>
                         <div class="mt-3 d-flex gap-1 align-items-center">
                             <a class="btn btn-secondary btn-sm pe-3" href="{{ route('note.show', $note) }}">View</a>
                             <a class="btn btn-success btn-sm pe-3" href="{{ route('note.edit', $note) }}">Edit</a>
